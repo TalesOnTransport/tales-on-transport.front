@@ -1,7 +1,4 @@
-import { createActions } from "redux-actions";
-
-// export const updateScannedId = createActions({
-//   UPDATE_SCANNED_ID: id => ({ id })
-// });
-
-export const updateScannedId = createActions("UPDATE_SCANNED_ID");
+export const setScannedBook = book => ({
+  type: "SET_SCANNED_BOOK",
+  payload: book
+});

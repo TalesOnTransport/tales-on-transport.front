@@ -1,1 +1,1 @@
-export const getScannedId = state => state.scannedId;
+export const getScannedBook = state => state.book;
