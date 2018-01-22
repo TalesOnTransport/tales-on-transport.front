@@ -1,22 +1,13 @@
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
-import Scan from "./Scan";
 
+import Scan from "./Scan";
 import { store } from "../index";
 import { setBookFound, setScannedBook } from "../actions/actions";
 import { getBookFound, getScannedBook } from "../selectors/selectors";
 
 class ScanContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      author: null,
-      title: null,
-      timesScanned: null
-    };
-  }
-
   componentWillMount() {
     const id = this.props.match.params.id;
     const xhr = new XMLHttpRequest();
