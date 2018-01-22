@@ -4,8 +4,8 @@ import React, { Component } from "react";
 import Scan from "./Scan";
 
 import { store } from "../index";
-import { setScannedBook } from "../actions/actions";
-import { getScannedBook } from "../selectors/selectors";
+import { setBookFound, setScannedBook } from "../actions/actions";
+import { getBookFound, getScannedBook } from "../selectors/selectors";
 
 class ScanContainer extends Component {
   constructor(props) {
@@ -23,8 +23,7 @@ class ScanContainer extends Component {
     xhr.open("POST", `http://localhost:55877/api/Scans/${id}`, true);
     xhr.onreadystatechange = () => {
       if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 404) {
-        // MILES redirect to 404
-        console.log("404 xhr", xhr);
+        store.dispatch(setBookFound({ bookFound: false }));
       }
       if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
         const { author, title, timesScanned } = JSON.parse(xhr.response);
@@ -37,23 +36,25 @@ class ScanContainer extends Component {
   render() {
     return (
       <div>
-        <h1>Scan container</h1>
-        <Scan {...this.props.book} />
+        <Scan {...this.props} />
       </div>
     );
   }
 }
 
 ScanContainer.propTypes = {
-  book: PropTypes.shape({}).isRequired
+  book: PropTypes.shape({}).isRequired,
+  bookFound: PropTypes.bool.isRequired
 };
 
 ScanContainer.defaultProps = {
-  book: {}
+  book: {},
+  bookFound: true
 };
 
 const mapStateToProps = state => ({
-  book: getScannedBook(state)
+  book: getScannedBook(state),
+  bookFound: getBookFound(state)
 });
 
 export default connect(mapStateToProps)(ScanContainer);
